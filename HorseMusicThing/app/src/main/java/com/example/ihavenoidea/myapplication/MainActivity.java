@@ -19,8 +19,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        textView = new TextView(this);
-        setContentView(textView);
+        setContentView(R.layout.activity_main);
+        textView = (TextView) findViewById(R.id.textView);
 
         SensorManager manager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Sensor accelerometer = manager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);

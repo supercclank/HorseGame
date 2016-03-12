@@ -16,36 +16,36 @@
         android:text="Hello World!"
         android:id="@+id/textView"/>
 
-    <ToggleButton
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New ToggleButton"
+        android:text="    "
         android:id="@+id/greenButton"
         android:layout_marginTop="135dp"
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:checked="false"
-        android:background="#228B22"/>
+        android:background="@drawable/greenbutntoggle"/>
 
-    <ToggleButton
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New ToggleButton"
+        android:text="    "
         android:id="@+id/redButton"
         android:layout_alignTop="@+id/greenButton"
         android:layout_centerHorizontal="true"
         android:checked="false"
-        android:background="#841F27"/>
+        android:background="@drawable/redbutntoggle"/>
 
-    <ToggleButton
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New ToggleButton"
+        android:text="    "
         android:id="@+id/yellowButton"
         android:layout_alignTop="@+id/redButton"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:checked="false"
-        android:background="#F5D04C"/>
+        android:background="@drawable/yellowbutntoggle"/>
 </RelativeLayout>
