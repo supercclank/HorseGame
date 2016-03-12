@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Sensor accelerometer = manager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
         manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_FASTEST);
 
-        buttonMapping.put("000", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn, this));
+        //buttonMapping.put("000", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn, this));
         buttonMapping.put("001", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn5, this));
         buttonMapping.put("010", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn3, this));
         buttonMapping.put("011", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn35, this));
