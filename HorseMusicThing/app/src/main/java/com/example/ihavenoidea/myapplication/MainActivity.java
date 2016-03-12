@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         builder.setLength(0);
         builder.append("x: ");
         builder.append(direction[0]);
-        builder.append(" y: ");
+        builder.append(", y: ");
         builder.append(direction[1]);
 
         textView.setText(builder.toString());
