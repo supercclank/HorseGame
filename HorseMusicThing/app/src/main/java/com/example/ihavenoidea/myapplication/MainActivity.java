@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     StringBuilder builder = new StringBuilder();
 
     float [] history = new float[3];
-    String[] direction = {"NONE","NONE", "NONE"};
+    String[] direction = {"NONE", "NONE", "NONE"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         history[2] = event.values[2];
 
         if (xChange > 2){
-            direction[0] = "Left";
+            direction[0] = "Right"; // lol everything is reversed
         }
         else if (xChange < -2){
-            direction[0] = "Right";
+            direction[0] = "Left";
         }
 
         if (yChange > 2){
