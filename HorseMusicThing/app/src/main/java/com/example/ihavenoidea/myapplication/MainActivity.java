@@ -8,10 +8,20 @@ import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.app.Activity;
+import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
     TextView textView;
     StringBuilder builder = new StringBuilder();
+    SoundPool sp;
+    int soundfile;
 
     float [] history = new float[3];
     String[] direction = {"NONE", "NONE", "NONE"};
@@ -29,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+
+        sp = new SoundPool(1,AudioManager.STREAM_MUSIC,0);
+        soundfile = sp.load("/location/of/airhorn.m4a",0);
 
         float xChange = history[0] - event.values[0];
         float yChange = history[1] - event.values[1];
@@ -60,16 +73,25 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         if (findViewById(R.id.greenButton).isPressed()) {
             pressed[0] = "YES";
+            if (soundfile != 0){
+                sp.play(soundfile, 1,1,0,0,1f); // play at original frequency
+            }
         } else {
             pressed[0] = "NO";
         }
         if (findViewById(R.id.redButton).isPressed()) {
             pressed[1] = "YES";
+            if (soundfile != 0){
+                sp.play(soundfile, 1,1,0,0,2f); // play at 2x frequency
+            }
         } else {
             pressed[1] = "NO";
         }
         if (findViewById(R.id.yellowButton).isPressed()) {
             pressed[2] = "YES";
+            if (soundfile != 0){
+                sp.play(soundfile, 1,1,0,0,3f); // play at 3x frequency
+            }
         } else {
             pressed[2] = "NO";
         }
