@@ -121,11 +121,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         } else {
             pressed[2] = "0";
         }
-
+        
         xChange = Math.abs(xChange);
         yChange = Math.abs(yChange);
         zChange = Math.abs(zChange);
-
 
         builder.setLength(0);
         builder.append("x: ");
