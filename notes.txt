@@ -9,7 +9,7 @@ B flat 932 [3]
 <name> <freq> <combo>
 
 
-<GRY> -> <fileName, freq>
+<LRUDAB|GRY> -> <fileName, freq>
 
 string in form ###
 

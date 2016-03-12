@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.ihavenoidea.myapplication.MainActivity">
+    tools:context="com.example.ihavenoidea.myapplication.MainActivity"
+    android:weightSum="1">
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,7 +27,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:checked="false"
-        android:background="@drawable/greenbutntoggle"/>
+        android:background="@drawable/greenbutntoggle"
+        />
 
     <Button
         android:layout_width="wrap_content"
@@ -36,7 +38,8 @@
         android:layout_alignTop="@+id/greenButton"
         android:layout_centerHorizontal="true"
         android:checked="false"
-        android:background="@drawable/redbutntoggle"/>
+        android:background="@drawable/redbutntoggle"
+        />
 
     <Button
         android:layout_width="wrap_content"
@@ -47,5 +50,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:checked="false"
-        android:background="@drawable/yellowbutntoggle"/>
+        android:background="@drawable/yellowbutntoggle"
+        />
 </RelativeLayout>
