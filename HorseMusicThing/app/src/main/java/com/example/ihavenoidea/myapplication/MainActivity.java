@@ -17,9 +17,11 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
     TextView textView;
     StringBuilder keyBuilder = new StringBuilder();
+
     SoundPool sp;
     boolean moveTaken = false;
     int soundfile;
+
     HashMap<String, String> buttonMapping = new HashMap<String, String>();
     int count = 0;
     SensorEvent oldEvent = null;
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         buttonMapping.put("110", "7");
         buttonMapping.put("111", "8");
 
-        sp = new SoundPool(1,AudioManager.STREAM_MUSIC,0);
+        sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         soundfile = sp.load(this, R.raw.airhorn, 0);
     }
 
