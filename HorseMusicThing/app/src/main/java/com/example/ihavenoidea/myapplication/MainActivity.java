@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     float [] history = new float[3];
     String[] direction = {"NONE", "NONE", "NONE"};
-
+    String[] pressed = {"NO", "NO", "NO"};
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +58,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             direction[2] = "Below";
         }
 
+        if (findViewById(R.id.greenButton).isPressed()) {
+            pressed[0] = "YES";
+        } else {
+            pressed[0] = "NO";
+        }
+        if (findViewById(R.id.redButton).isPressed()) {
+            pressed[1] = "YES";
+        } else {
+            pressed[1] = "NO";
+        }
+        if (findViewById(R.id.yellowButton).isPressed()) {
+            pressed[2] = "YES";
+        } else {
+            pressed[2] = "NO";
+        }
+
         builder.setLength(0);
         builder.append("x: ");
         builder.append(direction[0]);
@@ -65,6 +81,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         builder.append(direction[1]);
         builder.append(",    z: ");
         builder.append(direction[2]);
+        builder.append("\n");
+        builder.append("Green: ");
+        builder.append(pressed[0]);
+        builder.append(",    Red: ");
+        builder.append(pressed[1]);
+        builder.append(",    Yellow: ");
+        builder.append(pressed[2]);
 
         textView.setText(builder.toString());
     }
