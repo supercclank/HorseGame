@@ -38,17 +38,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         history[2] = event.values[2];
 
         if (xChange > 2){
-            direction[0] = "LEFT";
+            direction[0] = "Left";
         }
         else if (xChange < -2){
-            direction[0] = "RIGHT";
+            direction[0] = "Right";
         }
 
         if (yChange > 2){
-            direction[1] = "DOWN";
+            direction[1] = "Towards";
         }
         else if (yChange < -2){
-            direction[1] = "UP";
+            direction[1] = "Away";
         }
 
         if (zChange < -2) {
@@ -61,9 +61,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         builder.setLength(0);
         builder.append("x: ");
         builder.append(direction[0]);
-        builder.append(", y: ");
+        builder.append(",    y: ");
         builder.append(direction[1]);
-        builder.append(", z: ");
+        builder.append(",    z: ");
         builder.append(direction[2]);
 
         textView.setText(builder.toString());
