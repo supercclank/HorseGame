@@ -38,17 +38,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         history[2] = event.values[2];
 
         if (xChange > 2){
-            direction[0] = "Right"; // lol everything is reversed
+            direction[0] = "Left";
         }
         else if (xChange < -2){
-            direction[0] = "Left";
+            direction[0] = "Right";
         }
 
         if (yChange > 2){
-            direction[1] = "Towards";
+            direction[1] = "Away";
         }
         else if (yChange < -2){
-            direction[1] = "Away";
+            direction[1] = "Towards";
         }
 
         if (zChange < -2) {
