@@ -23,8 +23,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     TextView textView;
     StringBuilder builder = new StringBuilder();
     StringBuilder keyBuilder = new StringBuilder();
-    SoundPool sp;
-    int soundfile;
     HashMap<String, String> buttonMapping = new HashMap<String, String>();
     String lastDirection = "NONE";
 
@@ -57,16 +55,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         buttonMapping.put("Right|101", "14");
         buttonMapping.put("Right|110", "15");
         buttonMapping.put("Right|111", "16");
-
-        sp = new SoundPool(1,AudioManager.STREAM_MUSIC,0);
-        soundfile = sp.load(this, R.raw.airhorn, 0);
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-
-        //sp = new SoundPool(1,AudioManager.STREAM_MUSIC,0);
-        //soundfile = sp.load("/location/of/airhorn.m4a",0);
 
         float xChange = history[0] - event.values[0];
         float yChange = history[1] - event.values[1];
