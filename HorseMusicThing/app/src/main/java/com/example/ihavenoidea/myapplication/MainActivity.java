@@ -35,13 +35,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         SensorManager manager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Sensor accelerometer = manager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
         manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+
+        sp = new SoundPool(1,AudioManager.STREAM_MUSIC,0);
+        soundfile = sp.load(this, R.raw.airhorn, 0);
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-
-        sp = new SoundPool(1,AudioManager.STREAM_MUSIC,0);
-        soundfile = sp.load("/location/of/airhorn.m4a",0);
 
         float xChange = history[0] - event.values[0];
         float yChange = history[1] - event.values[1];
@@ -73,27 +73,34 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         if (findViewById(R.id.greenButton).isPressed()) {
             pressed[0] = "YES";
-            if (soundfile != 0){
-                sp.play(soundfile, 1,1,0,0,1f); // play at original frequency
-            }
         } else {
             pressed[0] = "NO";
         }
         if (findViewById(R.id.redButton).isPressed()) {
             pressed[1] = "YES";
-            if (soundfile != 0){
-                sp.play(soundfile, 1,1,0,0,2f); // play at 2x frequency
-            }
         } else {
             pressed[1] = "NO";
         }
         if (findViewById(R.id.yellowButton).isPressed()) {
             pressed[2] = "YES";
+        } else {
+            pressed[2] = "NO";
+        }
+
+        if (pressed[0].equals("YES")) {
+            if (soundfile != 0){
+                sp.play(soundfile, 1,1,0,0,1f); // play at original frequency
+            }
+        }
+        if (pressed[1].equals("YES")) {
+            if (soundfile != 0){
+                sp.play(soundfile, 1,1,0,0,2f); // play at 2x frequency
+            }
+        }
+        if (pressed[2].equals("YES")) {
             if (soundfile != 0){
                 sp.play(soundfile, 1,1,0,0,3f); // play at 3x frequency
             }
-        } else {
-            pressed[2] = "NO";
         }
 
         builder.setLength(0);
