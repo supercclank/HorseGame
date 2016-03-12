@@ -6,3 +6,33 @@ F 698 [123]
 G 784 [2]
 A 880 [12]
 B flat 932 [3]
+<name> <freq> <combo>
+
+
+<GRY> -> <fileName, freq>
+
+string in form ###
+
+1 means the button is pressed, 0 otherwise
+
+get with string form returns a duple of the name of the file to play (resource?) as well as the req
+
+<<String><ActionSound>>
+
+ActionSound
+    String resourceName
+    float freq
+
+    getters
+    play utility (this is what actually plays the sound)
+    equals (ensure the sounds were in the same order)
+
+
+scheme (make string in MainActivity)
+
+map.get(string).play() to play sound.
+
+As far as seeing if the right sound was played / looking at iterations is simply a Queue
+    make all sounds play up to end of queue, then prompt for play new sound (get ready toast ect)
+    record sound and append to Queue
+on failure game resets
