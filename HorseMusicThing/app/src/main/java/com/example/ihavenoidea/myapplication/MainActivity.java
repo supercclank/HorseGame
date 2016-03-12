@@ -18,11 +18,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     TextView textView;
     StringBuilder keyBuilder = new StringBuilder();
 
-    SoundPool sp;
     boolean moveTaken = false;
-    int soundfile;
 
-    HashMap<String, String> buttonMapping = new HashMap<String, String>();
+    HashMap<String, Airhorn> buttonMapping = new HashMap<String, Airhorn>();
     int count = 0;
     SensorEvent oldEvent = null;
 
@@ -43,17 +41,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Sensor accelerometer = manager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
         manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_FASTEST);
 
-        buttonMapping.put("000", "1");
-        buttonMapping.put("001", "2");
-        buttonMapping.put("010", "3");
-        buttonMapping.put("011", "4");
-        buttonMapping.put("100", "5");
-        buttonMapping.put("101", "6");
-        buttonMapping.put("110", "7");
-        buttonMapping.put("111", "8");
-
-        sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-        soundfile = sp.load(this, R.raw.airhorn, 0);
+        buttonMapping.put("000", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn, this));
+        buttonMapping.put("001", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn5, this));
+        buttonMapping.put("010", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn3, this));
+        buttonMapping.put("011", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn35, this));
+        buttonMapping.put("100", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn, this));
+        buttonMapping.put("101", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn15, this));
+        buttonMapping.put("110", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn13, this));
+        buttonMapping.put("111", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn135, this));
     }
 
     long lastUpdate = -1;
@@ -117,8 +112,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         oldDirection[0] = 0;
         rCount = 0;
         lCount = 0;
-        //playSound
-        //pressed[0] + pressed[1] + pressed[2]//
+        buttonMapping.get("" + pressed[0] + pressed[1] + pressed[2]).play();
+
     }
     }
 
