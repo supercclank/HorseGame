@@ -13,8 +13,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     TextView textView;
     StringBuilder builder = new StringBuilder();
 
-    float [] history = new float[2];
-    String[] direction = {"NONE","NONE"};
+    float [] history = new float[3];
+    String[] direction = {"NONE","NONE", "NONE"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,9 +32,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         float xChange = history[0] - event.values[0];
         float yChange = history[1] - event.values[1];
-
+        float zChange = history[2] - event.values[2];
         history[0] = event.values[0];
         history[1] = event.values[1];
+        history[2] = event.values[2];
 
         if (xChange > 2){
             direction[0] = "LEFT";
@@ -50,11 +51,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             direction[1] = "UP";
         }
 
+        if (zChange < -2) {
+            direction[2] = "Above";
+        }
+        else if (zChange > 2) {
+            direction[2] = "Below";
+        }
+
         builder.setLength(0);
         builder.append("x: ");
         builder.append(direction[0]);
         builder.append(", y: ");
         builder.append(direction[1]);
+        builder.append(", z: ");
+        builder.append(direction[2]);
 
         textView.setText(builder.toString());
     }
