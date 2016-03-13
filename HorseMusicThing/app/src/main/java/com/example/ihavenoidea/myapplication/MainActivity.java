@@ -198,7 +198,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 Context context = getApplicationContext();
                 //If player copies correctly
                 if (queue.get(currentPos).equals("" + pressed[0] + pressed[1] + pressed[2])) {
-                    buttonMapping.get("" + pressed[0] + pressed[1] + pressed[2]).play();
+                    // if dir == left, play(1), else play(2)
+                    buttonMapping.get("" + pressed[0] + pressed[1] + pressed[2]).play(1);
 //                    CharSequence text = "Correct! Pass to next player.";
 //                    int duration = Toast.LENGTH_SHORT;
 //                    Toast butteredToast = Toast.makeText(context, text, Toast.LENGTH_LONG);
