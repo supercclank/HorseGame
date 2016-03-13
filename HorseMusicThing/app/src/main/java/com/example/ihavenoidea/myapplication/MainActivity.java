@@ -12,25 +12,27 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
     TextView textView;
-    StringBuilder keyBuilder = new StringBuilder();
-
+    LinkedList<String> queue = new LinkedList<String>();
     boolean moveTaken = false;
 
     HashMap<String, Airhorn> buttonMapping = new HashMap<String, Airhorn>();
-    int count = 0;
-    SensorEvent oldEvent = null;
-
-    String lastDirection = "NONE";
 
     float [] history = new float[3];
     int[] direction = {0};
     String[] pressed = {"0", "0", "0"};
     int[] oldDirection = {0};
-
+    long lastUpdate = -1;
+    int rCount = 0;
+    int lCount = 0;
+    int currentPos = 0;
+    int player = 0;
+    ArrayList<String> players = new ArrayList<String>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +51,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         buttonMapping.put("101", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn15, this));
         buttonMapping.put("110", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn13, this));
         buttonMapping.put("111", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn135, this));
+
+        //prompt for player totals (2-4)
     }
 
-    long lastUpdate = -1;
-    int rCount = 0;
-    int lCount = 0;
-    int zCount = 0;
     @Override
     public void onSensorChanged(SensorEvent event) {
         long currTime = System.currentTimeMillis();
@@ -112,7 +112,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         oldDirection[0] = 0;
         rCount = 0;
         lCount = 0;
-        buttonMapping.get("" + pressed[0] + pressed[1] + pressed[2]).play();
+        if (buttonMapping.get("" + pressed[0] + pressed[1] + pressed[2]) != null) {
+            buttonMapping.get("" + pressed[0] + pressed[1] + pressed[2]).play();
+            //if it is not your turn to set one
+            if (currentPos < queue.size()) {
+                if (queue.get(currentPos).equals("" + pressed[0] + pressed[1] + pressed[2])) {
+                    //doNothing - you were correct - display toast
+                } else {
+                    //not matching, display dialogue saying you messed up and give letter
+                }
+            } else {
+                //making your own action
+                queue.add("" + pressed[0] + pressed[1] + pressed[2]);
+            }
+        }
 
     }
     }
