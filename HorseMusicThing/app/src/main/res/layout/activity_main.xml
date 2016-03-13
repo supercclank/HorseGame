@@ -10,22 +10,66 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.ihavenoidea.myapplication.MainActivity"
     android:weightSum="1">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:id="@+id/players"
+        android:orientation="vertical"
+        android:layout_above="@+id/greenButton">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:id="@+id/textView"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:text="P1  HORSE"
+            android:id="@+id/p3"
+            android:layout_gravity="right"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:text="P2  HORSE"
+            android:id="@+id/p1"
+            android:layout_marginTop="37dp"
+            android:layout_below="@+id/p3"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:text="P3  HORSE"
+            android:id="@+id/p2"
+            android:layout_above="@+id/p1"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:text="P4  HORSE"
+            android:id="@+id/p4"
+            android:layout_gravity="right"
+            android:layout_alignTop="@+id/p1"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="120dp"
         android:text="    "
         android:id="@+id/greenButton"
-        android:layout_marginTop="135dp"
         android:checked="false"
         android:background="@drawable/greenbutntoggle"
-        android:layout_below="@+id/textView"
+        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -51,4 +95,14 @@
         android:checked="false"
         android:background="@drawable/yellowbutntoggle"
         />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Player X Turn"
+        android:textSize="32sp"
+        android:id="@+id/currPLayer"
+        android:layout_marginBottom="55dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/yellowButton"
+        android:layout_toStartOf="@+id/yellowButton" />
 </RelativeLayout>
