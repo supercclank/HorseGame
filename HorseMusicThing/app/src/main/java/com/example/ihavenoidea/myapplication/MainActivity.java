@@ -90,13 +90,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         players.add("0");
         players.add("1");
 
-//        Button reset = (Button) findViewById(R.id.reset);
-//        reset.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
         //prompt for player totals (2-4)
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -116,6 +109,21 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         builder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 currentPlayer = playerPicker.getValue();
+            }
+        });
+
+        Button reset = (Button) findViewById(R.id.reset);
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setView(v1);
+                builder.setTitle("How many are playing?");
+                builder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        currentPlayer = playerPicker.getValue();
+                    }
+                });
             }
         });
 
