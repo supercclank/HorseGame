@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:text="P1  HORSE"
-            android:id="@+id/p3"
+            android:id="@+id/p1"
             android:layout_gravity="right"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -33,9 +33,9 @@
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:text="P2  HORSE"
-            android:id="@+id/p1"
+            android:id="@+id/p2"
             android:layout_marginTop="37dp"
-            android:layout_below="@+id/p3"
+            android:layout_below="@+id/p1"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:text="P3  HORSE"
-            android:id="@+id/p2"
+            android:id="@+id/p3"
             android:layout_above="@+id/p1"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />

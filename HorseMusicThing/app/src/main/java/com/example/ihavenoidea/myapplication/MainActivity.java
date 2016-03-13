@@ -10,19 +10,16 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.view.Gravity;
 import android.widget.TextView;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.widget.Toast;
 import android.widget.NumberPicker;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     ArrayList<String> playersStillIn = new ArrayList<String>();
     ArrayList<TextView> pViews = new ArrayList<TextView>();
-    ArrayList<String> playerLetters = new ArrayList<String>();
+    ArrayList<Integer> playerLetters = new ArrayList<Integer>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,19 +71,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         buttonMapping.put("110", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn13, this));
         buttonMapping.put("111", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn135, this));
 
-        pViews.add((TextView) findViewById(R.id.p1));
-        pViews.add((TextView) findViewById(R.id.p2));
-        pViews.add((TextView) findViewById(R.id.p3));
-        pViews.add((TextView) findViewById(R.id.p4));
-
         ((TextView) findViewById(R.id.currPLayer)).setText("Player " + (currentPlayer + 1) + " Turn");
-        playerLetters.add("");
-        playerLetters.add("");
-        playerLetters.add("");
-        playerLetters.add("");
 
-        players.add("0");
-        players.add("1");
 
         //prompt for player totals (2-4)
 
@@ -98,8 +84,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         playerPicker.setValue(2);
         playerPicker.setWrapSelectorWheel(true);
 
-        //alertdialog.setContentView(R.layout.custom);
-        //alertdialog.setTitle("How many are playing?");
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
         builder.setView(v1);
@@ -107,19 +91,25 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         builder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 currentPlayer = playerPicker.getValue();
+                for (int x = 0; x < currentPlayer; x++) {
+                    playerLetters.add(0);
+                    players.add("" + x);
+                }
+
+                Log.w("ahsdkfla", "" + players.size());
+
+                pViews.add((TextView) findViewById(R.id.p1));
+                pViews.add((TextView) findViewById(R.id.p2));
+                pViews.add((TextView) findViewById(R.id.p3));
+                pViews.add((TextView) findViewById(R.id.p4));
+
+                for (int x = 3; x >= currentPlayer; x--) {
+                    pViews.remove(x).setText("");
+                }
+
+                currentPlayer = 0;
             }
         });
-
-        //TextView text = (TextView) alertdialog.findViewById(R.id.text);
-        //text.setText("How many are playing?");
-
-//        Button dialogButton = (Button) alertdialog.findViewById(R.id.dialogButtonOK);
-//        dialogButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                alertdialog.dismiss();
-//            }
-//        });
 
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 
@@ -199,11 +189,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 //If player copies correctly
                 if (queue.get(currentPos).equals("" + pressed[0] + pressed[1] + pressed[2])) {
                     buttonMapping.get("" + pressed[0] + pressed[1] + pressed[2]).play();
-//                    CharSequence text = "Correct! Pass to next player.";
-//                    int duration = Toast.LENGTH_SHORT;
-//                    Toast butteredToast = Toast.makeText(context, text, Toast.LENGTH_LONG);
-//                    butteredToast.setGravity(Gravity.CENTER, 0, 0);
-//                    butteredToast.show();
                     currentPos++;
                 //Player copies incorrectly
                 } else {
@@ -216,9 +201,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     burntToast.show();
                     currentPos = 0;
                     queue.clear();
+                    playerLetters.set(currentPlayer, playerLetters.get(currentPlayer) + 1);
+                    pViews.get(currentPlayer).setText(Html.fromHtml("P" + (currentPlayer + 1) + " <font color='#EE0000'>" + "HORSE".substring(0, playerLetters.get(currentPlayer)) + "</font>" + " HORSE".substring(playerLetters.get(currentPlayer) + 1)));
                     currentPlayer += 1;
                     currentPlayer = currentPlayer % players.size();
                     ((TextView) findViewById(R.id.currPLayer)).setText("Player " + (currentPlayer + 1) + " Turn");
+
                     //not matching, display dialogue saying you messed up and give letter
                 }
             } else {
