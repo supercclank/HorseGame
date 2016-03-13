@@ -12,6 +12,8 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -33,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     int currentPos = 0;
     int player = 0;
     ArrayList<String> players = new ArrayList<String>();
+    ArrayList<String> playersStillIn = new ArrayList<String>();
+    ArrayList<TextView> pViews = new ArrayList<TextView>();
+    ArrayList<String> playerLetters = new ArrayList<String>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +57,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         buttonMapping.put("110", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn13, this));
         buttonMapping.put("111", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn135, this));
 
+        pViews.add((TextView) findViewById(R.id.p1));
+        pViews.add((TextView) findViewById(R.id.p2));
+        pViews.add((TextView) findViewById(R.id.p3));
+        pViews.add((TextView) findViewById(R.id.p4));
+
+        ((TextView) findViewById(R.id.currPLayer)).setText("Player" + player + "Turn");
+        playerLetters.add("");
+        playerLetters.add("");
+        playerLetters.add("");
+        playerLetters.add("");
         //prompt for player totals (2-4)
     }
 
@@ -123,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 }
             } else {
                 //making your own action
-                queue.add("" + pressed[0] + pressed[1] + pressed[2]);
+                queue.addLast("" + pressed[0] + pressed[1] + pressed[2]);
             }
         }
 
