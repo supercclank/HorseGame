@@ -7,6 +7,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.widget.TextView;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     int rCount = 0;
     int lCount = 0;
     int currentPos = 0;
-    int player = 0;
+    int currentPlayer = 0;
     ArrayList<String> players = new ArrayList<String>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,16 +115,38 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         lCount = 0;
         if (buttonMapping.get("" + pressed[0] + pressed[1] + pressed[2]) != null) {
             buttonMapping.get("" + pressed[0] + pressed[1] + pressed[2]).play();
-            //if it is not your turn to set one
+            //Player's turn to copy
             if (currentPos < queue.size()) {
+                Context context = getApplicationContext();
+                //If player copies correctly
                 if (queue.get(currentPos).equals("" + pressed[0] + pressed[1] + pressed[2])) {
-                    //doNothing - you were correct - display toast
+//                    CharSequence text = "Correct! Pass to next player.";
+//                    int duration = Toast.LENGTH_SHORT;
+//                    Toast butteredToast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+//                    butteredToast.setGravity(Gravity.CENTER, 0, 0);
+//                    butteredToast.show();
+                    currentPos++;
+                //Player copies incorrectly
                 } else {
+                    Airhorn wrong = new Airhorn(com.example.ihavenoidea.myapplication.R.raw.scream, context);
+                    wrong.play();
+                    CharSequence text = "Incorrect! Next player's turn to set.";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast burntToast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+                    burntToast.setGravity(Gravity.CENTER, 0, 0);
+                    burntToast.show();
+                    currentPos = 0;
+                    queue.clear();
+                    currentPlayer += 1;
+                    currentPlayer = currentPlayer % players.size();
                     //not matching, display dialogue saying you messed up and give letter
                 }
             } else {
                 //making your own action
-                queue.add("" + pressed[0] + pressed[1] + pressed[2]);
+                queue.addLast("" + pressed[0] + pressed[1] + pressed[2]);
+                currentPlayer += 1;
+                currentPlayer = currentPlayer % players.size();
+                currentPos = 0;
             }
         }
 
