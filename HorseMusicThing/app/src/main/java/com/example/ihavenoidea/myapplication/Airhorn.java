@@ -14,9 +14,9 @@ public class Airhorn {
         soundfile = sp.load(context, sound, 0);
     }
 
-    public void play() {
+    public void play(float freq) {
         if (soundfile != 0) {
-            sp.play(soundfile, 1, 1, 0, 0, 1f);
+            sp.play(soundfile, 1, 1, 0, 0, freq);
         }
     }
 
