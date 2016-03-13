@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
         //gets the xChange and then updates history
-        float xChange = history[0] - event.values[0];
+        float xChange = history[0] - event.values[1];
         history[0] = event.values[0];
 
         //updates the x direction if needed (threshold of 3 for now)
