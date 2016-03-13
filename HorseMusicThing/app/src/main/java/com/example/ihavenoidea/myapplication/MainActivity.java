@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 //Player copies incorrectly
                 } else {
                     Airhorn wrong = new Airhorn(com.example.ihavenoidea.myapplication.R.raw.scream, context);
-                    wrong.play();
+                    wrong.play(1);
                     CharSequence text = "Incorrect! Next player's turn to set.";
                     int duration = Toast.LENGTH_SHORT;
                     Toast burntToast = Toast.makeText(context, text, Toast.LENGTH_LONG);
@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 }
             } else {
                 //making your own action
-                buttonMapping.get("" + pressed[0] + pressed[1] + pressed[2]).play();
+                buttonMapping.get("" + pressed[0] + pressed[1] + pressed[2]).play(1);
                 queue.addLast("" + pressed[0] + pressed[1] + pressed[2]);
                 currentPlayer += 1;
                 currentPlayer = currentPlayer % players.size();
