@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textView = (TextView) findViewById(R.id.textView);
+        //textView = (TextView) findViewById(R.id.textView);
 
         SensorManager manager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Sensor accelerometer = manager.getSensorList(Sensor.TYPE_ACCELEROMETER).get(0);
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         pViews.add((TextView) findViewById(R.id.p3));
         pViews.add((TextView) findViewById(R.id.p4));
 
-        ((TextView) findViewById(R.id.currPLayer)).setText("Player" + (currentPlayer + 1) + "Turn");
+        ((TextView) findViewById(R.id.currPLayer)).setText("Player " + (currentPlayer + 1) + " Turn");
         playerLetters.add("");
         playerLetters.add("");
         playerLetters.add("");
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     queue.clear();
                     currentPlayer += 1;
                     currentPlayer = currentPlayer % players.size();
-                    ((TextView) findViewById(R.id.currPLayer)).setText("Player " + currentPlayer + " Turn");
+                    ((TextView) findViewById(R.id.currPLayer)).setText("Player " + (currentPlayer + 1) + " Turn");
                     //not matching, display dialogue saying you messed up and give letter
                 }
             } else {
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 queue.addLast("" + pressed[0] + pressed[1] + pressed[2]);
                 currentPlayer += 1;
                 currentPlayer = currentPlayer % players.size();
-                ((TextView) findViewById(R.id.currPLayer)).setText("Player" + currentPlayer + "Turn");
+                ((TextView) findViewById(R.id.currPLayer)).setText("Player " + (currentPlayer + 1) + " Turn");
                 currentPos = 0;
                 Context context = getApplicationContext();
                 CharSequence text = "Pass the phone! Next player's turn to copy.";
