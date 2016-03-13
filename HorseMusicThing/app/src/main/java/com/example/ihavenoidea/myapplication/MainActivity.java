@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     queue.clear();
                     currentPlayer += 1;
                     currentPlayer = currentPlayer % players.size();
-                    ((TextView) findViewById(R.id.currPLayer)).setText("Player" + currentPlayer + "Turn");
+                    ((TextView) findViewById(R.id.currPLayer)).setText("Player " + currentPlayer + " Turn");
                     //not matching, display dialogue saying you messed up and give letter
                 }
             } else {
