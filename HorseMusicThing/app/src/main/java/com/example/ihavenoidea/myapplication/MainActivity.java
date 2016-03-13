@@ -8,6 +8,8 @@ import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     HashMap<String, Airhorn> buttonMapping = new HashMap<String, Airhorn>();
 
-    float [] history = new float[3];
+    float[] history = new float[3];
     int[] direction = {0};
     String[] pressed = {"0", "0", "0"};
     int[] oldDirection = {0};
@@ -72,6 +74,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         players.add("0");
         players.add("1");
 
+//        Button reset = (Button) findViewById(R.id.reset);
+//        reset.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
         //prompt for player totals (2-4)
     }
 
