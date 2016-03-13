@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -16,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.NumberPicker;
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     HashMap<String, Airhorn> buttonMapping = new HashMap<String, Airhorn>();
 
-    float [] history = new float[3];
+    float[] history = new float[3];
     int[] direction = {0};
     String[] pressed = {"0", "0", "0"};
     int[] oldDirection = {0};
@@ -77,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //prompt for player totals (2-4)
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v1 = inflater.inflate(R.layout.numpicker, null);
+        final View v1 = inflater.inflate(R.layout.numpicker, null);
         playerPicker = (NumberPicker) v1.findViewById(R.id.playerPicker);
         playerPicker.setMaxValue(4);
         playerPicker.setMinValue(2);
@@ -102,6 +105,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 pViews.add((TextView) findViewById(R.id.p2));
                 pViews.add((TextView) findViewById(R.id.p3));
                 pViews.add((TextView) findViewById(R.id.p4));
+
+        Button reset = (Button) findViewById(R.id.reset);
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = getBaseContext().getPackageManager()
+                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+            }
+        });
 
                 for (int x = 3; x >= currentPlayer; x--) {
                     pViews.remove(x).setText("");
@@ -188,12 +202,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 Context context = getApplicationContext();
                 //If player copies correctly
                 if (queue.get(currentPos).equals("" + pressed[0] + pressed[1] + pressed[2])) {
-                    buttonMapping.get("" + pressed[0] + pressed[1] + pressed[2]).play();
+                    buttonMapping.get("" + pressed[0] + pressed[1] + pressed[2]).play(1);
+
                     currentPos++;
                 //Player copies incorrectly
                 } else {
                     Airhorn wrong = new Airhorn(com.example.ihavenoidea.myapplication.R.raw.scream, context);
-                    wrong.play();
+                    wrong.play(1);
                     CharSequence text = "Incorrect! Next player's turn to set.";
                     int duration = Toast.LENGTH_SHORT;
                     Toast burntToast = Toast.makeText(context, text, Toast.LENGTH_LONG);
@@ -211,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 }
             } else {
                 //making your own action
-                buttonMapping.get("" + pressed[0] + pressed[1] + pressed[2]).play();
+                buttonMapping.get("" + pressed[0] + pressed[1] + pressed[2]).play(1);
                 queue.addLast("" + pressed[0] + pressed[1] + pressed[2]);
                 currentPlayer += 1;
                 currentPlayer = currentPlayer % players.size();
