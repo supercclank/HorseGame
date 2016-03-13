@@ -1,16 +1,25 @@
 package com.example.ihavenoidea.myapplication;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.widget.Toast;
+import android.widget.NumberPicker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +42,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     int currentPos = 0;
     int player = 0;
     ArrayList<String> players = new ArrayList<String>();
+
+    final Context context = this;
+    private Button button;
+    NumberPicker playerPicker;
+    TextView defPlayer;
+    Dialog alertdialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +69,50 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         buttonMapping.put("111", new Airhorn(com.example.ihavenoidea.myapplication.R.raw.airhorn135, this));
 
         //prompt for player totals (2-4)
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v1 = inflater.inflate(R.layout.numpicker, null);
+        playerPicker = (NumberPicker) v1.findViewById(R.id.playerPicker);
+        playerPicker.setMaxValue(4);
+        playerPicker.setMinValue(2);
+        playerPicker.setValue(2);
+        playerPicker.setWrapSelectorWheel(true);
+
+        //alertdialog.setContentView(R.layout.custom);
+        //alertdialog.setTitle("How many are playing?");
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+        builder.setView(v1);
+        builder.setTitle("How many are playing?");
+        builder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                player = playerPicker.getValue();
+            }
+        });
+
+        //TextView text = (TextView) alertdialog.findViewById(R.id.text);
+        //text.setText("How many are playing?");
+
+//        Button dialogButton = (Button) alertdialog.findViewById(R.id.dialogButtonOK);
+//        dialogButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                alertdialog.dismiss();
+//            }
+//        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertdialog.dismiss();
+
+            }
+        });
+
+        alertdialog = builder.create();
+        alertdialog.show();
+
     }
 
     @Override
