@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             //if okay is clicked, initialize everything to the correct sizes and update screen
             public void onClick(View v) {
                 //gets the number of players from the picker
-                //currentPlayer = playerPicker.getValue();
+                currentPlayer = playerPicker.getValue();
                 // add the correct number of starting values to playerLetters, players and playersStillIn
                 for (int x = 0; x < currentPlayer; x++) {
                     playerLetters.add(0);
@@ -155,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                 //set the currentPlayer to 0 (the first player)
                 currentPlayer = 0;
+                alertdialog.dismiss();
             }
         });
 
