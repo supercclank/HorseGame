@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Simon Says: DJ Version</string>
+    <string name="app_name">Simon Says: DJ Edition</string>
+    <string name="app_label">SS: DJE</string>
 </resources>

@@ -83,8 +83,6 @@
         android:shadowRadius="5"
         />
 
-        />
-
     <Button
         android:layout_width="100dp"
         android:layout_height="200dp"
@@ -113,10 +111,9 @@
         android:text="Player 1 Turn"
         android:textSize="32sp"
         android:id="@+id/currPLayer"
-        android:layout_below="@+id/greenButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="62dp"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white"
+        android:layout_above="@+id/reset"
+        android:layout_centerHorizontal="true"/>
 
     <Button
         android:layout_width="wrap_content"
