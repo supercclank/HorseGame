@@ -220,7 +220,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         //if the  directions need to be shown, show them, otherwise go right to the player picker
         if (!skipMessage.equals("checked")) {
-            directionBuilder.show();
+            AlertDialog directionDialogue = directionBuilder.create();
+            directionDialogue.setCanceledOnTouchOutside(false);
+            directionDialogue.show();
         } else {
             alertdialog = builder.create();
             alertdialog.setCancelable(false);
