@@ -214,6 +214,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         final View v2 = inflater2.inflate(R.layout.difficulty, null, false);
         AlertDialog.Builder diff = new AlertDialog.Builder(MainActivity.this);
         diff.setView(v2);
+        diff.setTitle("Choose a difficulty");
+
         //difficulty buttons
         Button easy = (Button) v2.findViewById(R.id.easy);
         Button medium = (Button) v2.findViewById(R.id.medium);
@@ -300,42 +302,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (difficulty != null) {
             switch (difficulty) {
                 case EASY:
-                    if (findViewById(R.id.greenButton).isPressed()) {
-                        pressed[0] = "1";
-                        pressed[1] = "0";
-                        pressed[2] = "0";
-                        findViewById(R.id.redButton).setPressed(false);
-                        findViewById(R.id.yellowButton).setPressed(false);
-                        findViewById(R.id.redButton).setEnabled(false);
-                        findViewById(R.id.yellowButton).setEnabled(false);
-                    } else {
-                        pressed[0] = "0";
-                        if (findViewById(R.id.redButton).isPressed()) {
-                            pressed[1] = "1";
-                            pressed[2] = "0";
-                            findViewById(R.id.greenButton).setPressed(false);
-                            findViewById(R.id.yellowButton).setPressed(false);
-                            findViewById(R.id.greenButton).setEnabled(false);
-                            findViewById(R.id.yellowButton).setEnabled(false);
-                        } else {
-                            pressed[1] = "0";
-                            if (findViewById(R.id.yellowButton).isPressed()) {
-                                pressed[2] = "1";
-                                findViewById(R.id.greenButton).setPressed(false);
-                                findViewById(R.id.redButton).setPressed(false);
-                                findViewById(R.id.greenButton).setEnabled(false);
-                                findViewById(R.id.redButton).setEnabled(false);
-                            } else {
-                                pressed[2] = "0";
-                            }
-                        }
-
-                    }
-                    if (!(findViewById(R.id.greenButton).isPressed() && findViewById(R.id.redButton).isPressed() && findViewById(R.id.yellowButton).isPressed())) {
-                        findViewById(R.id.greenButton).setEnabled(true);
-                        findViewById(R.id.redButton).setEnabled(true);
-                        findViewById(R.id.yellowButton).setEnabled(true);
-                    }
                     break;
                 case MEDIUM:
                     if (findViewById(R.id.greenButton).isPressed()) {
@@ -372,8 +338,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         pressed[2] = "0";
                     }
                     break;
-                }
+            }
         }
+
         //if the current direction is right (or has been right) bump right count
         if (direction[0] == 1) {
             rCount++;
@@ -401,7 +368,102 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
         //if a move has been taken and the direction has changed from the previously recorded value
+        if (moveTaken && oldDirection[0] != direction[0]) {
+            //update the old direction as 0 (neutral) and reset the counts
+            oldDirection[0] = 0;
+            rCount = 0;
+            lCount = 0;
+            //ensure that a combo of the three buttons was held
+            if (buttonMapping.get("" + pressed[0] + pressed[1] + pressed[2]) != null) {
+                //Player's turn to copy
+                if (currentPos < queue.size()) {
+                    Context context = getApplicationContext();
+                    //If player copies correctly
+                    if (queue.get(currentPos).equals("" + pressed[0] + pressed[1] + pressed[2])) {
+                        buttonMapping.get("" + pressed[0] + pressed[1] + pressed[2]).play(1);
 
+                        currentPos++;
+                    //Player copies incorrectly, play the negative sound and then penalize
+                    } else {
+                        Airhorn wrong = new Airhorn(R.raw.scream, context);
+                        wrong.play(1);
+                        currentPos = 0;
+                        queue.clear();
+                        playerLetters.set(currentPlayer, playerLetters.get(currentPlayer) + 1);
+                        pViews.get(currentPlayer).setText(Html.fromHtml("P" + (currentPlayer + 1) + " <font color='#EE0000'>" + "HORSE".substring(0, playerLetters.get(currentPlayer)) + "</font>" + " HORSE".substring(playerLetters.get(currentPlayer) + 1)));
+
+                        //If this player has spelt HORSE, eliminate them
+                        if (playerLetters.get(currentPlayer) == 5) {
+                            playersStillIn.set(currentPlayer, false);
+                        }
+
+                        //if there is only one player remaining, game is over
+                        //  make dialog and display winner and allow game restart
+                        if (Collections.frequency(playersStillIn, true) == 1) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                            builder.setTitle("Game over!");
+                            TextView tv = new TextView(this);
+                            tv.setText("Player " +  (playersStillIn.indexOf(true) + 1) +" Wins!");
+                            tv.setGravity(Gravity.CENTER);
+                            tv.setTextSize(25);
+                            builder.setView(tv);
+                            builder.setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent i = getBaseContext().getPackageManager()
+                                            .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(i);
+                                }
+                            });
+                            builder.create().show();
+                        }
+                        // if the player is still in the game direct them to pass
+                        else {
+                            CharSequence text = "Incorrect! Next player's turn to set.";
+                            int duration = Toast.LENGTH_SHORT;
+                            Toast burntToast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+                            burntToast.setGravity(Gravity.CENTER, 0, 0);
+                            burntToast.show();
+                        }
+                        //skip over players who were eliminated
+                        currentPlayer += 1;
+                        currentPlayer = currentPlayer % players.size();
+                        while (!playersStillIn.get(currentPlayer)) {
+                            currentPlayer += 1;
+                            currentPlayer = currentPlayer % players.size();
+                        }
+                        ((TextView) findViewById(R.id.currPLayer)).setText("Player " + (currentPlayer + 1) + " Turn");
+                    }
+                }
+                //player has correctly done all of the commands, they get to set a command and then prompted to pass
+                else {
+                    //adding a players action to the queue
+                    buttonMapping.get("" + pressed[0] + pressed[1] + pressed[2]).play(1);
+                    queue.addLast("" + pressed[0] + pressed[1] + pressed[2]);
+                    currentPlayer += 1;
+                    currentPlayer = currentPlayer % players.size();
+
+                    //skip over players who were eliminated
+                    while (!playersStillIn.get(currentPlayer)) {
+                        currentPlayer += 1;
+                        currentPlayer = currentPlayer % players.size();
+                    }
+
+                    //prompt the player to pass the phone to the next player
+                    ((TextView) findViewById(R.id.currPLayer)).setText("Player " + (currentPlayer + 1) + " Turn");
+                    currentPos = 0;
+                    Context context = getApplicationContext();
+                    CharSequence text = "Pass the phone! Next player's turn to copy.";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast burntToast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+                    burntToast.setGravity(Gravity.CENTER, 0, 0);
+                    burntToast.show();
+                }
+            }
+
+        }
+    }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
