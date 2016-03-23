@@ -159,8 +159,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        //create and show the dialog
+        //create and show the dialog, also make it unable to be cancelled
         alertdialog = builder.create();
+        alertdialog.setCancelable(false);
         alertdialog.show();
 
         //create and add the reset button to the screen (simply restarts the app for now)
