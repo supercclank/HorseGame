@@ -214,8 +214,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         final View v2 = inflater2.inflate(R.layout.difficulty, null, false);
         AlertDialog.Builder diff = new AlertDialog.Builder(MainActivity.this);
         diff.setView(v2);
-        diff.setTitle("Choose a difficulty");
-
         //difficulty buttons
         Button easy = (Button) findViewById(R.id.easy);
         Button medium = (Button) findViewById(R.id.medium);
