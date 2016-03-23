@@ -215,9 +215,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         AlertDialog.Builder diff = new AlertDialog.Builder(MainActivity.this);
         diff.setView(v2);
         //difficulty buttons
-        Button easy = (Button) findViewById(R.id.easy);
-        Button medium = (Button) findViewById(R.id.medium);
-        Button hard = (Button) findViewById(R.id.hard);
+        Button easy = (Button) v2.findViewById(R.id.easy);
+        Button medium = (Button) v2.findViewById(R.id.medium);
+        Button hard = (Button) v2.findViewById(R.id.hard);
 
         easy.setOnClickListener(new OnClickListener() {
             @Override
@@ -297,56 +297,66 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         //if (easy)
         //sets the values for the GRY button presses
-
-        switch (difficulty) {
-            case EASY:
-                if (findViewById(R.id.greenButton).isPressed()) {
-                    pressed[0] = "1";
-                    pressed[1] = "0";
-                    pressed[2] = "0";
-                    findViewById(R.id.redButton).setEnabled(false);
-                    findViewById(R.id.yellowButton).setEnabled(false);
-                } else {
-                    pressed[0] = "0";
-                    if (findViewById(R.id.redButton).isPressed()) {
-                        pressed[1] = "1";
-                        pressed[2] = "0";
-                    } else {
+        if (difficulty != null) {
+            switch (difficulty) {
+                case EASY:
+                    if (findViewById(R.id.greenButton).isPressed()) {
+                        pressed[0] = "1";
                         pressed[1] = "0";
-                        if (findViewById(R.id.yellowButton).isPressed()) {
-                            pressed[2] = "1";
-                        } else {
+                        pressed[2] = "0";
+                        findViewById(R.id.redButton).setPressed(false);
+                        findViewById(R.id.yellowButton).setPressed(false);
+                        findViewById(R.id.redButton).setEnabled(false);
+                        findViewById(R.id.yellowButton).setEnabled(false);
+                    } else {
+                        pressed[0] = "0";
+                        if (findViewById(R.id.redButton).isPressed()) {
+                            pressed[1] = "1";
                             pressed[2] = "0";
+                            findViewById(R.id.greenButton).setPressed(false);
+                            findViewById(R.id.yellowButton).setPressed(false);
+                            findViewById(R.id.greenButton).setEnabled(false);
+                            findViewById(R.id.yellowButton).setEnabled(false);
+                        } else {
+                            pressed[1] = "0";
+                            if (findViewById(R.id.yellowButton).isPressed()) {
+                                pressed[2] = "1";
+                                findViewById(R.id.greenButton).setPressed(false);
+                                findViewById(R.id.redButton).setPressed(false);
+                                findViewById(R.id.greenButton).setEnabled(false);
+                                findViewById(R.id.redButton).setEnabled(false);
+                            } else {
+                                pressed[2] = "0";
+                            }
                         }
+
                     }
 
-                }
-
-                if (!(findViewById(R.id.greenButton).isPressed() && findViewById(R.id.redButton).isPressed() && findViewById(R.id.yellowButton).isPressed())) {
-                    findViewById(R.id.greenButton).setEnabled(false);
-                    findViewById(R.id.redButton).setEnabled(true);
-                    findViewById(R.id.yellowButton).setEnabled(true);
-                }
-                break;
-            case MEDIUM:
-                if (findViewById(R.id.greenButton).isPressed()) {
-                    pressed[0] = "1";
-                } else {
-                    pressed[0] = "0";
-                }
-                if (findViewById(R.id.redButton).isPressed()) {
-                    pressed[1] = "1";
-                } else {
-                    pressed[1] = "0";
-                }
-                if (findViewById(R.id.yellowButton).isPressed()) {
-                    pressed[2] = "1";
-                } else {
-                    pressed[2] = "0";
-                }
-                break;
+                    if (!(findViewById(R.id.greenButton).isPressed() && findViewById(R.id.redButton).isPressed() && findViewById(R.id.yellowButton).isPressed())) {
+                        findViewById(R.id.greenButton).setEnabled(true);
+                        findViewById(R.id.redButton).setEnabled(true);
+                        findViewById(R.id.yellowButton).setEnabled(true);
+                    }
+                    break;
+                case MEDIUM:
+                    if (findViewById(R.id.greenButton).isPressed()) {
+                        pressed[0] = "1";
+                    } else {
+                        pressed[0] = "0";
+                    }
+                    if (findViewById(R.id.redButton).isPressed()) {
+                        pressed[1] = "1";
+                    } else {
+                        pressed[1] = "0";
+                    }
+                    if (findViewById(R.id.yellowButton).isPressed()) {
+                        pressed[2] = "1";
+                    } else {
+                        pressed[2] = "0";
+                    }
+                    break;
             }
-
+        }
         //if the current direction is right (or has been right) bump right count
         if (direction[0] == 1) {
             rCount++;
