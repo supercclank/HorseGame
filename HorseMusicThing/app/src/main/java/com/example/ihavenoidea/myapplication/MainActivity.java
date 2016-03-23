@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.view.Gravity;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.NumberPicker;
@@ -99,10 +101,54 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //ArrayList to keep track of the number of letters a player has
     ArrayList<Integer> playerLetters = new ArrayList<Integer>();
 
+    //AllertDialog.Builder used to make the player selection
+    AlertDialog.Builder builder;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //create the do not dismiss alertDialogue that provides direction
+        AlertDialog.Builder directionBuilder = new AlertDialog.Builder(MainActivity.this);
+        LayoutInflater directionInflater = LayoutInflater.from(MainActivity.this);
+        final View directionLayout = directionInflater.inflate(R.layout.direction_layout, null);
+        final CheckBox directionCheckbox = (CheckBox) directionLayout.findViewById(R.id.skip);
+        directionBuilder.setView(directionLayout);
+
+        //set up the okay button for the directions
+        directionBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                String checkBoxResult = "NOT checked";
+                if (directionCheckbox.isChecked())
+                    checkBoxResult = "checked";
+                SharedPreferences settings = getSharedPreferences("showDirection", 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putString("skipMessage", checkBoxResult);
+                // Commit the edits!
+                editor.commit();
+                //create and show the dialog, also make it unable to be cancelled
+                alertdialog = builder.create();
+                alertdialog.setCancelable(false);
+                alertdialog.show();
+            }
+        });
+
+        //set up the shared setting to determine whether or not the directions should be shown
+        SharedPreferences settings = getSharedPreferences("showDirection", 0);
+        String skipMessage = settings.getString("skipMessage", "NOT checked");
+
+        //set what happens when you click outside the direction back or hit the back button
+        directionBuilder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                //create and show the dialog, also make it unable to be cancelled
+                alertdialog = builder.create();
+                alertdialog.setCancelable(false);
+                alertdialog.show();
+            }
+        });
+
 
         //get the sensor manager and set the current sensor to the accelerometer
         SensorManager manager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -126,9 +172,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         playerPicker.setMinValue(2);
         playerPicker.setValue(2);
         playerPicker.setWrapSelectorWheel(true);
+        playerPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
         //build the alert dialog that prompts for the number of players
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder = new AlertDialog.Builder(MainActivity.this);
         builder.setView(v1);
         builder.setTitle("How many are playing?");
 
@@ -199,6 +246,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 startActivity(i);
             }
         });
+
+        //if the  directions need to be shown, show them, otherwise go right to the player picker
+        if (!skipMessage.equals("checked")) {
+            AlertDialog directionDialogue = directionBuilder.create();
+            directionDialogue.setCanceledOnTouchOutside(false);
+            directionDialogue.show();
+        } else {
+            alertdialog = builder.create();
+            alertdialog.setCancelable(false);
+            alertdialog.show();
+        }
 
     }
 
