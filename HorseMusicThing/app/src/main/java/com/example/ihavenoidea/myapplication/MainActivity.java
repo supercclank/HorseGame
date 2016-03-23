@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         //make the numberPicker used to select the number of players (bounded to 2-4)
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View v1 = inflater.inflate(R.layout.numpicker, null);
+        final View v1 = inflater.inflate(R.layout.numpicker, null, false);
         playerPicker = (NumberPicker) v1.findViewById(R.id.playerPicker);
         playerPicker.setMaxValue(4);
         playerPicker.setMinValue(2);
@@ -204,16 +204,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 //set the currentPlayer to 0 (the first player)
                 currentPlayer = 0;
                 alertdialog.dismiss();
+                alertdialog2.show();
             }
         });
 
-        //create and show the dialog, also make it unable to be cancelled
-        alertdialog = builder.create();
-        alertdialog.setCancelable(false);
-        alertdialog.show();
-
         //alert dialog for difficulty
-        final View v2 = inflater.inflate(R.layout.difficulty, null);
+        LayoutInflater inflater2 = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View v2 = inflater2.inflate(R.layout.difficulty, null, false);
         AlertDialog.Builder diff = new AlertDialog.Builder(MainActivity.this);
         diff.setView(v2);
         diff.setTitle("Choose a difficulty");
@@ -233,7 +230,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //disable cancelable for difficulty
         alertdialog2 = diff.create();
         alertdialog2.setCancelable(false);
-        alertdialog2.show();
 
         //create and add the reset button to the screen (simply restarts the app for now)
         Button reset = (Button) findViewById(R.id.reset);
