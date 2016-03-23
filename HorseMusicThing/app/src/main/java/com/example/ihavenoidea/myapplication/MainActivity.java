@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //the Dialog used to prompt for the number of players
     Dialog alertdialog;
+    Dialog alertdialog2;
 
     //ArrayList to keep track of whether the players are still in the game
     ArrayList<Boolean> playersStillIn = new ArrayList<Boolean>();
@@ -164,6 +165,29 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         alertdialog.setCancelable(false);
         alertdialog.show();
 
+        //alert dialog for difficulty
+        final View v2 = inflater.inflate(R.layout.difficulty, null);
+        AlertDialog.Builder diff = new AlertDialog.Builder(MainActivity.this);
+        diff.setView(v2);
+        diff.setTitle("Choose a difficulty");
+
+        //difficulty buttons
+        Button easy = (Button) findViewById(R.id.easy);
+        Button medium = (Button) findViewById(R.id.medium);
+        Button hard = (Button) findViewById(R.id.hard);
+
+//        diff.setTitle("Difficulty");
+//        diff.setButton(SSDifficulty.EASY, "Easy", new DialogInterface.OnClickListener()
+//        public void onClick(DialogInterface dialog int id) {
+//
+//
+//        });
+
+        //disable cancelable for difficulty
+        alertdialog2 = diff.create();
+        alertdialog2.setCancelable(false);
+        alertdialog2.show();
+
         //create and add the reset button to the screen (simply restarts the app for now)
         Button reset = (Button) findViewById(R.id.reset);
         reset.setOnClickListener(new View.OnClickListener() {
@@ -201,6 +225,37 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             direction[0] = 1;
         }
 
+        //if (easy)
+        //sets the values for the GRY button presses
+//        if (findViewById(R.id.greenButton).isPressed()) {
+//            pressed[0] = "1";
+//            pressed[1] = "0";
+//            pressed[2] = "0";
+//            findViewById(R.id.redButton).setEnabled(false);
+//            findViewById(R.id.yellowButton).setEnabled(false);
+//        } else {
+//            pressed[0] = "0";
+//            if (findViewById(R.id.redButton).isPressed()) {
+//                pressed[1] = "1";
+//                pressed[2] = "0";
+//            } else {
+//                pressed[1] = "0";
+//                if (findViewById(R.id.yellowButton).isPressed()) {
+//                    pressed[2] = "1";
+//                } else {
+//                    pressed[2] = "0";
+//                }
+//            }
+//
+//        }
+//
+//        if (!(findViewById(R.id.greenButton).isPressed() && findViewById(R.id.redButton).isPressed() && findViewById(R.id.yellowButton).isPressed())) {
+//            findViewById(R.id.greenButton).setEnabled(false);
+//            findViewById(R.id.redButton).setEnabled(true);
+//            findViewById(R.id.yellowButton).setEnabled(true);
+//        }
+
+        //if (medium)
         //sets the values for the GRY button presses
         if (findViewById(R.id.greenButton).isPressed()) {
             pressed[0] = "1";
