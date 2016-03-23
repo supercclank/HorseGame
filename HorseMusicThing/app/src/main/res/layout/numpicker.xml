@@ -11,4 +11,12 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:id="@+id/playerPickerConfirmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Game"
+        android:layout_below="@+id/playerPicker"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>

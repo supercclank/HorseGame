@@ -12,6 +12,7 @@ import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +20,7 @@ import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.NumberPicker;
-
+import android.view.View.OnClickListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -131,14 +132,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         builder.setTitle("How many are playing?");
 
         //set up the okay button for the dialog
-        builder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
-
+        v1.findViewById(R.id.playerPickerConfirmButton).setOnClickListener(new OnClickListener() {
             //if okay is clicked, initialize everything to the correct sizes and update screen
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View v) {
                 //gets the number of players from the picker
                 currentPlayer = playerPicker.getValue();
-
-                //add the correct number of starting values to playerLetters, players and playersStillIn
+                // add the correct number of starting values to playerLetters, players and playersStillIn
                 for (int x = 0; x < currentPlayer; x++) {
                     playerLetters.add(0);
                     players.add("" + x);
@@ -156,16 +155,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
                 //set the currentPlayer to 0 (the first player)
                 currentPlayer = 0;
-            }
-        });
-
-        //create the negative button for the builder, nothing here just default behavior
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
                 alertdialog.dismiss();
-
             }
         });
 
@@ -313,6 +303,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                             burntToast.show();
                         }
                         //skip over players who were eliminated
+                        currentPlayer += 1;
+                        currentPlayer = currentPlayer % players.size();
                         while (!playersStillIn.get(currentPlayer)) {
                             currentPlayer += 1;
                             currentPlayer = currentPlayer % players.size();
@@ -352,5 +344,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         // nothing to do here
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }
