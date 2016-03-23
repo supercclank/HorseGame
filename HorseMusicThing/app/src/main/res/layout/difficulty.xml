@@ -9,8 +9,7 @@
         android:layout_height="wrap_content"
         android:text="Easy"
         android:id="@+id/easy"
-        android:layout_marginTop="140dp"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/hard"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -26,7 +25,6 @@
         android:layout_height="wrap_content"
         android:text="Hard"
         android:id="@+id/hard"
-        android:layout_below="@+id/medium"
-        android:layout_alignLeft="@+id/medium"
-        android:layout_alignStart="@+id/medium" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
